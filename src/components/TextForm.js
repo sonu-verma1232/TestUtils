@@ -9,6 +9,7 @@ export default function TextForm(props) {
         let newText = text.toUpperCase();
         setText(newText);
         // correct way to change the state
+        props.showAlert("Converted to uppercase!","success");
     }
 
     const handleOnChange = (event) => {
@@ -18,16 +19,19 @@ export default function TextForm(props) {
 
     const handleLoClick = () => {
         setText(text.toLowerCase());
+        props.showAlert("Converted to lowercase!","success");
     }
 
     const handleCopy = () => {
         var text = document.getElementById("myBox");
         text.select();
         navigator.clipboard.writeText(text.value);
+        props.showAlert("Copeid to clipboard!","success");
     }
 
     const handleClearkClick = () => {
         setText('');
+         props.showAlert("Text cleared!","success");
     }
 
     const[text, setText] = useState("");
@@ -39,7 +43,7 @@ export default function TextForm(props) {
         <div className='container'>
             <h1>{props.heading}</h1>
             <div className="mb-3">
-                <textarea className="form-control" value={text} onChange={handleOnChange} id="myBox" rows="8"></textarea>
+                <textarea className="form-control" value={text} onChange={handleOnChange} style={{backgroundColor: props.mode === 'light' ? 'white':'#343a40', color: props.mode === 'light'?'black':'white'}} id="myBox" rows="8"></textarea>
             </div>
             <button className="btn btn-primary mx-2" onClick={handleUpClick}>Convert to Uppercase</button>
             
@@ -55,7 +59,7 @@ export default function TextForm(props) {
             <p>{text.split(" ").length} and {text.length}</p>
             <p>{0.008 * text.split(" ").length} Minutes required to read.</p>
             <h5>Preview</h5>
-            <p>{text}</p>
+            <p>{text.length>0?text:'Enter something in the above textbox to preview it here'}</p>
         </div>
         </>
     )
